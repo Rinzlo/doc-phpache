@@ -39,4 +39,4 @@ services:
             
 volumes:
     database-volume:
-        name: arcaic
+        name: database
