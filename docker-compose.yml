@@ -1,0 +1,42 @@
+services:
+    app:
+        container_name: app_container
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            # - ./src:/var/www/html/
+            # - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
+            - ./src:/var/www/html/
+        environment: 
+            - ALLOW_OVERRIDE=true
+    
+    db:
+        container_name: database_container
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+        # ports:
+        #     - 3306:3306
+        volumes: 
+            - database-volume:/var/lib/mysql
+
+    
+    myadmin:
+        container_name: mymin_container
+        image: phpmyadmin
+        restart: always
+        ports: 
+            - 8080:80
+        environment:
+            PMA_HOST: db
+            # - PMA_ARBITRARY=1
+            UPLOAD_LIMIT: 1000M
+            
+volumes:
+    database-volume:
+        name: arcaic
